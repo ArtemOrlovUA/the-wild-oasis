@@ -8,6 +8,8 @@ const Row = styled.div`
         display: flex;
         flex-direction: row;
         gap: 3rem;
+        justify-content: space-between;
+        align-items: center;
       `
     );
   }}
