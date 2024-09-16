@@ -2,9 +2,10 @@
 import styled from 'styled-components';
 
 import { formatCurrency } from '../../utils/helpers';
-import { deleteCabin } from '../../services/apiCabins';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
+import { useState } from 'react';
+import CreateCabinForm from './CreateCabinForm';
+import { useDeleteCabin } from './useDeleteCabin';
+import { useCreateCabin } from './useCreateCabin';
 
 const TableRow = styled.div`
   display: grid;
@@ -46,32 +47,51 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { id: cabinId, name, maxCapacity, regularPrice, discount, image } = cabin;
+  const { id: cabinId, name, maxCapacity, regularPrice, discount, image, description } = cabin;
+  const [showForm, setShowForm] = useState(false);
 
-  const queryClient = useQueryClient();
+  const { isDeleting, deleteCabin } = useDeleteCabin();
 
-  const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => deleteCabin(id),
-    onSuccess: () => {
-      toast.success('Cabin deleted');
-      queryClient.invalidateQueries({ queryKey: ['cabins'] });
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  const { createCabin, isCreating } = useCreateCabin();
+
+  function handleDuplicate() {
+    console.log('hi');
+    createCabin({
+      name: `${name} (copy)`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
-    <TableRow role="row">
-      <img src={image} alt={name} />
-      <Cabin>{name}</Cabin>
-      <div>{maxCapacity}</div>
-      <Price>{formatCurrency(regularPrice)}</Price>
-      <Price>{formatCurrency(discount)}</Price>
-      <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
-        Delete
-      </button>
-    </TableRow>
+    <>
+      <TableRow role="row">
+        <img src={image} alt={name} />
+        <Cabin>{name}</Cabin>
+        <div>{maxCapacity}</div>
+        <Price>{formatCurrency(regularPrice)}</Price>
+        <Price>{formatCurrency(discount)}</Price>
+        <div>
+          <button
+            onClick={() => {
+              handleDuplicate();
+            }}
+            disabled={isDeleting || isCreating}>
+            Duplicate
+          </button>
+          <button onClick={() => setShowForm((showForm) => !showForm)} disabled={isDeleting}>
+            Edit
+          </button>
+          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
+            Delete
+          </button>
+        </div>
+      </TableRow>
+      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+    </>
   );
 }
 
