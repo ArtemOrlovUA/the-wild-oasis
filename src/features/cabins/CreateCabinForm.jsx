@@ -21,15 +21,17 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const { createCabin, isCreating } = useCreateCabin();
   const { editCabin, isEditingCabin } = useEditCabin();
 
   const isEditing = Boolean(editId);
+
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditing ? editValues : {},
   });
+
   const { errors } = formState;
 
   const isWorking = isCreating || isEditingCabin;
@@ -37,8 +39,25 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   function onSubmit(data) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
 
-    if (isEditing) editCabin({ newCabinData: { ...data, image: image }, id: editId });
-    else createCabin({ ...data, image: image }, { onSuccess: () => reset() });
+    if (isEditing)
+      editCabin(
+        { newCabinData: { ...data, image: image }, id: editId },
+        {
+          onSuccess: () => {
+            onCloseModal?.();
+          },
+        },
+      );
+    else
+      createCabin(
+        { ...data, image: image },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        },
+      );
   }
 
   function onError(errors) {
@@ -129,8 +148,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={() => onCloseModal?.()}>
           Cancel
         </Button>
         <Button disabled={isCreating}>{isEditing ? 'Confirm' : 'Add cabin'}</Button>

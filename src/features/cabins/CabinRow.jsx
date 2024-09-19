@@ -6,6 +6,8 @@ import { useState } from 'react';
 import CreateCabinForm from './CreateCabinForm';
 import { useDeleteCabin } from './useDeleteCabin';
 import { useCreateCabin } from './useCreateCabin';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
 const TableRow = styled.div`
   display: grid;
@@ -82,12 +84,27 @@ function CabinRow({ cabin }) {
             disabled={isDeleting || isCreating}>
             Duplicate
           </button>
-          <button onClick={() => setShowForm((showForm) => !showForm)} disabled={isDeleting}>
-            Edit
-          </button>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            Delete
-          </button>
+          <Modal>
+            <Modal.Open opens={'edit'}>
+              <button onClick={() => setShowForm((showForm) => !showForm)} disabled={isDeleting}>
+                Edit
+              </button>
+            </Modal.Open>
+            <Modal.Window name={'edit'}>
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+          </Modal>
+          <Modal>
+            <Modal.Open opens={'delete'}>
+              <button>Delete</button>
+            </Modal.Open>
+            <Modal.Window name={'delete'}>
+              <ConfirmDelete
+                resourceName={name}
+                onConfirm={() => deleteCabin(cabinId)}
+                disabled={isDeleting}></ConfirmDelete>
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
       {showForm && <CreateCabinForm cabinToEdit={cabin} />}

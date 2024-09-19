@@ -39,8 +39,8 @@ function App() {
             <Route path="cabins" element={<Cabins />} />
             <Route path="login" element={<Login />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="users" element={<Users />} />
           </Route>
-          <Route path="users" element={<Users />} />
           <Route path="*" element={<PageNotFount />} />
         </Routes>
       </BrowserRouter>
