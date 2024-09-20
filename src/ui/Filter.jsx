@@ -49,7 +49,7 @@ function Filter({ filterField, options }) {
     <StyledFilter>
       {options.map((option) => (
         <FilterButton
-          active={option.value === currentFilter}
+          active={option.value === currentFilter ? 'true' : undefined}
           key={option.value}
           onClick={() => HandleClick(option.value)}>
           {option.label}
