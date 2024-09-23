@@ -1,9 +1,10 @@
-import BookingRow from "./BookingRow";
-import Table from "../../ui/Table";
-import Menus from "../../ui/Menus";
+import BookingRow from './BookingRow';
+import Table from '../../ui/Table';
+import Menus from '../../ui/Menus';
+import { useBookings } from './useBookings';
 
 function BookingTable() {
-  const bookings = [];
+  const { bookings } = useBookings();
 
   return (
     <Menus>
@@ -17,11 +18,11 @@ function BookingTable() {
           <div></div>
         </Table.Header>
 
+        {console.log(bookings)}
+
         <Table.Body
           data={bookings}
-          render={(booking) => (
-            <BookingRow key={booking.id} booking={booking} />
-          )}
+          render={(booking) => <BookingRow key={booking.id} booking={booking} />}
         />
       </Table>
     </Menus>

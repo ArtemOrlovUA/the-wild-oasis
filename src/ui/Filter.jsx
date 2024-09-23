@@ -50,6 +50,7 @@ function Filter({ filterField, options }) {
       {options.map((option) => (
         <FilterButton
           active={option.value === currentFilter ? 'true' : undefined}
+          disabled={option.value === currentFilter ? 'true' : undefined}
           key={option.value}
           onClick={() => HandleClick(option.value)}>
           {option.label}

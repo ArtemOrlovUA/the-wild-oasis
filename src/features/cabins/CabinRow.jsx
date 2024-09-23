@@ -59,7 +59,6 @@ function CabinRow({ cabin }) {
   const { createCabin, isCreating } = useCreateCabin();
 
   function handleDuplicate() {
-    console.log('hi');
     createCabin({
       name: `${name} (copy)`,
       maxCapacity,
@@ -104,8 +103,7 @@ function CabinRow({ cabin }) {
             <Modal.Window name={'edit'}>
               <CreateCabinForm cabinToEdit={cabin} />
             </Modal.Window>
-          </Modal>
-          <Modal>
+
             <Modal.Window name={'delete'}>
               <ConfirmDelete
                 resourceName={name}

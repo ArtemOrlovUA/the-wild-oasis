@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
@@ -92,8 +92,6 @@ function Toggle({ id }) {
     const rect = e.target.closest('button').getBoundingClientRect();
     const pos = { x: window.innerWidth - rect.width - rect.x, y: rect.y + rect.height + 8 };
     setPosition(pos);
-    console.log(openId);
-    console.log(id);
 
     if (openId === '' || openId !== id) {
       open(id);
@@ -112,6 +110,23 @@ function Toggle({ id }) {
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close);
+
+  useEffect(() => {
+    const mainElement = document.querySelector('main'); // Target the 'main' element
+    if (!mainElement) return; // Exit if 'main' is not found
+
+    const handleScroll = () => {
+      close(); // Close the modal on scroll
+    };
+
+    // Add event listener for scroll to 'main' element
+    mainElement.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      mainElement.removeEventListener('scroll', handleScroll);
+    };
+  }, [close]);
 
   return openId === id
     ? createPortal(
