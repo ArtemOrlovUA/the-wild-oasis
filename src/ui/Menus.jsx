@@ -112,17 +112,15 @@ function List({ id, children }) {
   const ref = useOutsideClick(close);
 
   useEffect(() => {
-    const mainElement = document.querySelector('main'); // Target the 'main' element
-    if (!mainElement) return; // Exit if 'main' is not found
+    const mainElement = document.querySelector('main');
+    if (!mainElement) return;
 
     const handleScroll = () => {
-      close(); // Close the modal on scroll
+      close();
     };
 
-    // Add event listener for scroll to 'main' element
     mainElement.addEventListener('scroll', handleScroll);
 
-    // Cleanup the event listener on component unmount
     return () => {
       mainElement.removeEventListener('scroll', handleScroll);
     };

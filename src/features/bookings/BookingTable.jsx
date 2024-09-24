@@ -18,8 +18,6 @@ function BookingTable() {
           <div></div>
         </Table.Header>
 
-        {console.log(bookings)}
-
         <Table.Body
           data={bookings}
           render={(booking) => <BookingRow key={booking.id} booking={booking} />}
