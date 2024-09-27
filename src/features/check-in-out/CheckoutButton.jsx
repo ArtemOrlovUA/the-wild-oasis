@@ -1,8 +1,19 @@
-import Button from "../../ui/Button";
+/* eslint-disable react/prop-types */
+import { useParams } from 'react-router-dom';
+import Button from '../../ui/Button';
+import { useCheckout } from './useCheckout';
 
-function CheckoutButton({ bookingId }) {
+function CheckoutButton() {
+  const { checkout, isCheckingout } = useCheckout();
+
+  const { bookingId } = useParams();
+
   return (
-    <Button variation="primary" size="small">
+    <Button
+      variation="primary"
+      size="small"
+      disabled={isCheckingout}
+      onClick={() => checkout(bookingId)}>
       Check out
     </Button>
   );
