@@ -41,10 +41,10 @@ function App() {
             <Route path="bookings/:bookingId" element={<Booking />} />
             <Route path="checkin/:bookingId" element={<CheckIn />} />
             <Route path="cabins" element={<Cabins />} />
-            <Route path="login" element={<Login />} />
             <Route path="settings" element={<Settings />} />
             <Route path="users" element={<Users />} />
           </Route>
+          <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFount />} />
         </Routes>
       </BrowserRouter>

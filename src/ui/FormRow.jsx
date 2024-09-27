@@ -3,8 +3,8 @@ import { Form } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledFormRow = styled.div`
-  display: grid;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   grid-template-columns: 24rem 1fr 1.2fr;
   gap: 2.4rem;
 
