@@ -22,6 +22,8 @@ const Form = styled.form`
     
   overflow: hidden;
   font-size: 1.4rem;
+  max-height: 80vh;
+  overflow-y: auto;
 `;
 
 export default Form;
