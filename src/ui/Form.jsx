@@ -19,11 +19,15 @@ const Form = styled.form`
     css`
       width: 80rem;
     `}
+
+  ${(props) =>
+    props.type === 'users' &&
+    css`
+      max-height: none;
+    `}
     
   overflow: hidden;
   font-size: 1.4rem;
-  max-height: 80vh;
-  overflow-y: auto;
 `;
 
 export default Form;

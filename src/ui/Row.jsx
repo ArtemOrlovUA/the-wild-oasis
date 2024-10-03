@@ -13,6 +13,7 @@ const Row = styled.div`
       `
     );
   }}
+
   ${(props) => {
     return (
       props.type === 'vert' &&
@@ -21,6 +22,19 @@ const Row = styled.div`
         flex-direction: column;
         justify-content: space-between;
         padding-top: 20px;
+        padding-bottom: 20px;
+        gap: 1.5rem;
+      `
+    );
+  }}
+
+  ${(props) => {
+    return (
+      props.type === 'updateUser' &&
+      css`
+        display: flex;
+        flex-direction: column;
+
         padding-bottom: 20px;
         gap: 1.5rem;
       `
