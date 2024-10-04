@@ -1,4 +1,8 @@
-import styled from "styled-components";
+/* eslint-disable react/no-unescaped-entities */
+import styled from 'styled-components';
+import { useRecentBookings } from './useRecentBookings';
+import Spinner from '../../ui/Spinner';
+import { useRecentStays } from './useRecentStays';
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -6,3 +10,23 @@ const StyledDashboardLayout = styled.div`
   grid-template-rows: auto 34rem auto;
   gap: 2.4rem;
 `;
+
+function DashboardLayout() {
+  const { isLoading: isLoadingBookings, bookings: recentBookings } = useRecentBookings();
+  const { isLoading: isLoadingStays, confirmedStays, stays } = useRecentStays();
+
+  if (isLoadingBookings || isLoadingStays) {
+    return <Spinner />;
+  }
+
+  return (
+    <StyledDashboardLayout>
+      <div>Statistics</div>
+      <div>Today's activity</div>
+      <div>Chart stay durations</div>
+      <div>Chart sales</div>
+    </StyledDashboardLayout>
+  );
+}
+
+export default DashboardLayout;
