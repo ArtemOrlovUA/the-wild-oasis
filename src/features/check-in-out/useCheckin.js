@@ -15,7 +15,7 @@ export function useCheckin() {
       queryClient.invalidateQueries({
         active: true,
       });
-      navifgate('/bookings');
+      navifgate(-1);
     },
     onError: (error) => {
       toast.error(error.message);

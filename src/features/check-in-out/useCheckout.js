@@ -14,7 +14,6 @@ export function useCheckout() {
       queryClient.invalidateQueries({
         active: true,
       });
-      navifgate('/bookings');
     },
     onError: (error) => {
       toast.error(error.message);

@@ -61,52 +61,7 @@ const startDataLight = [
   },
 ];
 
-const startDataDark = [
-  {
-    duration: '1 night',
-    value: 0,
-    color: '#b91c1c',
-  },
-  {
-    duration: '2 nights',
-    value: 0,
-    color: '#c2410c',
-  },
-  {
-    duration: '3 nights',
-    value: 0,
-    color: '#a16207',
-  },
-  {
-    duration: '4-5 nights',
-    value: 0,
-    color: '#4d7c0f',
-  },
-  {
-    duration: '6-7 nights',
-    value: 0,
-    color: '#15803d',
-  },
-  {
-    duration: '8-14 nights',
-    value: 0,
-    color: '#0f766e',
-  },
-  {
-    duration: '15-21 nights',
-    value: 0,
-    color: '#1d4ed8',
-  },
-  {
-    duration: '21+ nights',
-    value: 0,
-    color: '#7e22ce',
-  },
-];
-
 function prepareData(startData, stays) {
-  // A bit ugly code, but sometimes this is what it takes when working with real data 😅
-
   function incArrayValue(arr, field) {
     return arr.map((obj) => (obj.duration === field ? { ...obj, value: obj.value + 1 } : obj));
   }
@@ -130,9 +85,7 @@ function prepareData(startData, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
-  const { isDarkMode } = useDarkMode();
-
-  const data = prepareData(isDarkMode ? startDataDark : startDataLight, confirmedStays);
+  const data = prepareData(startDataLight, confirmedStays);
 
   return (
     <ChartBox>
