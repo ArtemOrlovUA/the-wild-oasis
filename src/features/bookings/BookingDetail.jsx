@@ -33,6 +33,8 @@ function BookingDetail() {
 
   if (isLoading) return <Spinner />;
 
+  if (!booking) return <Heading>No booking found</Heading>;
+
   const statusToTagName = {
     unconfirmed: 'blue',
     'checked-in': 'green',
